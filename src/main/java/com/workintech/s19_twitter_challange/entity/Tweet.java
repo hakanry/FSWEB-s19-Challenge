@@ -25,7 +25,7 @@ public class Tweet {
     private String tweetText;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "tuser_id")
     private User user;
 
     @OneToMany(mappedBy = "tweet")

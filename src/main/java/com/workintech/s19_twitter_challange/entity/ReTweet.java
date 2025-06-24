@@ -1,9 +1,6 @@
 package com.workintech.s19_twitter_challange.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,11 +12,16 @@ import lombok.NoArgsConstructor;
 @Table(name = "retweet")
 public class ReTweet {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
+
     @ManyToOne
     @JoinColumn(name = "tweet_id")
     private Tweet tweet;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "tuser_id")
     private User user;
 }

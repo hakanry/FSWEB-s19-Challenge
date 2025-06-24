@@ -27,7 +27,7 @@ public class Comment {
     private Tweet tweet;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "tuser_id")
     private User user;
 
 
