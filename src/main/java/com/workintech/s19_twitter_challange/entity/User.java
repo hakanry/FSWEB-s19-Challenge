@@ -33,6 +33,18 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private Set<Tweet> tweets;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Like> likes;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<ReTweet> reTweets;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return  roles;
