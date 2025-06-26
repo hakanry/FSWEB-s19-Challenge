@@ -28,13 +28,13 @@ public class Tweet {
     @JoinColumn(name = "tuser_id")
     private User user;
 
-    @OneToMany(mappedBy = "tweet")
+    @OneToMany(mappedBy = "tweet",fetch = FetchType.EAGER)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "tweet")
+    @OneToMany(mappedBy = "tweet",fetch = FetchType.EAGER)
     private List<Like> likes;
 
-    @OneToMany(mappedBy = "tweet")
+    @OneToMany(mappedBy = "tweet",fetch = FetchType.EAGER)
     private List<ReTweet> reTweets;
 }
 
