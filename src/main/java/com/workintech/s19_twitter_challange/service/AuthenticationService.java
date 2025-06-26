@@ -19,20 +19,20 @@ public class AuthenticationService {
     private PasswordEncoder passwordEncoder;
 
 
-    public User register(String username, String password) {
+    public User register(String username, String password,Boolean isAdmin) {
         Optional<User> userOptional = userRepository.findByUserName(username);
         if(userOptional.isPresent()){
             throw new RuntimeException("Bu kullanıcı adı daha önce alınmış. USERNAME: "+username);
         }
 
         String encodedPassword = passwordEncoder.encode(password);
-
-
         Set<Role> roles = new HashSet<>();
-        addRoleAdmin(roles);
-        //addRoleUser(roles);
-        User user = new User();
 
+        if(isAdmin == true)
+            addRoleAdmin(roles);
+        addRoleUser(roles);
+
+        User user = new User();
         user.setRoles(roles);
         user.setPassword(encodedPassword);
         user.setUsername(username);
