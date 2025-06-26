@@ -1,7 +1,10 @@
 package com.workintech.s19_twitter_challange.service;
 
+import com.workintech.s19_twitter_challange.dto.UserRequestDto;
+import com.workintech.s19_twitter_challange.dto.UserResponseDto;
 import com.workintech.s19_twitter_challange.entity.User;
 import com.workintech.s19_twitter_challange.exceptions.UserNotFoundException;
+import com.workintech.s19_twitter_challange.mapper.UserMapper;
 import com.workintech.s19_twitter_challange.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,22 +19,25 @@ import java.util.List;
 public class UserServiceImpl implements UserDetailsService , UserService{
 
     private UserRepository userRepository;
-
+    private UserMapper userMapper;
     @Override
-    public List<User> getUsers(){
-        return userRepository.findAll();
+    public List<UserResponseDto> getUsers(){
+        return userRepository.findAll().stream().map(user -> userMapper.toResponseDto(user)).toList();
     }
     @Override
-    public User getUserById(long id){
-        return userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id + "'li USER bulunamadı!"));
+    public UserResponseDto getUserById(long id){
+        return userMapper.toResponseDto(userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id + "'li USER bulunamadı!")));
     }
     @Override
-    public User save(User user){
-        return userRepository.save(user);
+    public UserResponseDto save(UserRequestDto userRequestDto){
+        User user = userMapper.toEntity(userRequestDto);
+        userRepository.save(user);
+        return userMapper.toResponseDto(userRepository.save(user));
     }
     @Override
-    public User update(long userId,User user){
-        User foundUser = getUserById(userId);
+    public UserResponseDto update(long userId,UserRequestDto userRequestDto){
+        User user = userMapper.toEntity(userRequestDto);
+        User foundUser = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId + "'li USER bulunamadı!"));
 
         if(user.getUsername()!= null){
             foundUser.setUsername(user.getUsername());
@@ -39,13 +45,14 @@ public class UserServiceImpl implements UserDetailsService , UserService{
         if(user.getPassword() != null){
             foundUser.setPassword(user.getPassword());
         }
-        return userRepository.save(foundUser);
+        userRepository.save(foundUser);
+        return userMapper.toResponseDto(foundUser);
     }
     @Override
-    public User delete(long id){
-        User foundUser = getUserById(id);
+    public UserResponseDto delete(long id){
+        User foundUser = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id + "'li USER bulunamadı!"));
         userRepository.delete(foundUser);
-        return foundUser;
+        return userMapper.toResponseDto(foundUser);
     }
 
 

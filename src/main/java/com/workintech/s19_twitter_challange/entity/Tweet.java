@@ -1,11 +1,15 @@
 package com.workintech.s19_twitter_challange.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -20,8 +24,12 @@ public class Tweet {
     @Column(name = "id")
     private long id;
 
+
+    @NotBlank(message = "Tweet boş olmamalıdır!")
+    @NotNull(message = "Tweet zorunludur!")
+    @NotEmpty(message = "Tweet boşluk olmamalıdır!")
+    @Size(max = 100,message = "Tweet 0-1200 karakter arası olmalıdır!")
     @Column(name = "tweet_text")
-    @Size(max = 1200)
     private String tweetText;
 
     @ManyToOne
@@ -29,12 +37,12 @@ public class Tweet {
     private User user;
 
     @OneToMany(mappedBy = "tweet",fetch = FetchType.EAGER)
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "tweet",fetch = FetchType.EAGER)
-    private List<Like> likes;
+    private List<Like> likes = new ArrayList<>();
 
     @OneToMany(mappedBy = "tweet",fetch = FetchType.EAGER)
-    private List<ReTweet> reTweets;
+    private List<ReTweet> reTweets = new ArrayList<>();
 }
 
