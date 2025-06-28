@@ -28,7 +28,9 @@ public class UserRequestDto{
     @NotBlank(message = "Şifre boş olmamalıdır!")
     @NotNull(message = "Şifre zorunludur!")
     @NotEmpty(message = "Şifre boşluk olmamalıdır!")
-    @Size(max = 30,message = "Şifre 0-30 karakter arası olmalıdır!")
+    @Size(min=6,max = 30,message = "Şifre 6-30 karakter arası olmalıdır!")
     @Column(name = "password")
     private String password;
+
+    private Boolean isAdmin;
 }

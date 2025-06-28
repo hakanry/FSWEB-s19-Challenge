@@ -1,4 +1,7 @@
 package com.workintech.s19_twitter_challange.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -36,9 +39,9 @@ public class User implements UserDetails {
     @NotBlank(message = "Şifre boş olmamalıdır!")
     @NotNull(message = "Şifre zorunludur!")
     @NotEmpty(message = "Şifre boşluk olmamalıdır!")
-    @Size(max = 30,message = "Şifre 0-30 karakter arası olmalıdır!")
     @Column(name = "password")
     private String password;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
@@ -47,16 +50,32 @@ public class User implements UserDetails {
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonManagedReference("user-tweet")
     private Set<Tweet> tweets = new HashSet<>();
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonManagedReference("user-comment")
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonManagedReference("user-like")
     private List<Like> likes = new ArrayList<>();
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonManagedReference("user-retweet")
     private List<ReTweet> reTweets = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

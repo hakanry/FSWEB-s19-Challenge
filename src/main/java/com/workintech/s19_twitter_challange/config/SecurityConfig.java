@@ -26,13 +26,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/welcome/**").permitAll();
-                    auth.requestMatchers("/auth/**").permitAll();
-                    auth.requestMatchers("/actuator/**").permitAll();
-                    auth.requestMatchers(HttpMethod.GET,"/account/**").hasAnyAuthority("ADMIN","USER");
-                    auth.requestMatchers(HttpMethod.POST,"/account/**").hasAnyAuthority("ADMIN");
-                    auth.requestMatchers(HttpMethod.PUT,"/account/**").hasAnyAuthority("ADMIN");
-                    auth.requestMatchers(HttpMethod.DELETE,"/account/**").hasAnyAuthority("ADMIN");
+                    auth.requestMatchers("/register/**").permitAll();
+                    auth.requestMatchers("/login/**").permitAll();
+                    auth.requestMatchers("/user/**").hasAnyAuthority("ADMIN");
+                    auth.requestMatchers("/tweet/**").hasAnyAuthority("ADMIN","USER");
+                    auth.requestMatchers("/like/**").hasAnyAuthority("ADMIN","USER");
+                    auth.requestMatchers("/dislike/**").hasAnyAuthority("ADMIN","USER");
+                    auth.requestMatchers("/comment/**").hasAnyAuthority("ADMIN","USER");
+                    auth.requestMatchers("/retweet/**").hasAnyAuthority("ADMIN","USER");
                     auth.anyRequest().authenticated();
                 })
                 .formLogin(Customizer.withDefaults())

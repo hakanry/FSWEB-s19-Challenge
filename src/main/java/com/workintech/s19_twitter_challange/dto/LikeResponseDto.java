@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
-public class UserResponseDto {
-    private String username;
-    private Set<TweetResponseDto> tweets;
+public class LikeResponseDto {
+
+    private String tweet;
+    private String user;
 }

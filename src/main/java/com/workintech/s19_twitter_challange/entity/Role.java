@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.Objects;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -20,4 +22,16 @@ public class Role implements GrantedAuthority {
 
     @Column(nullable = false, unique = true)
     private String authority;
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return id == role.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }
