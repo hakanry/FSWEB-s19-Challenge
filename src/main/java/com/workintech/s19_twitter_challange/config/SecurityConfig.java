@@ -7,6 +7,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,11 +24,12 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-        return httpSecurity.csrf(csrf -> csrf.disable())
+        return httpSecurity.csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/register/**").permitAll();
                     auth.requestMatchers("/login/**").permitAll();
-                    auth.requestMatchers("/user/**").hasAnyAuthority("ADMIN");
+                    auth.requestMatchers("/user/**").hasAuthority("ADMIN");
                     auth.requestMatchers("/tweet/**").hasAnyAuthority("ADMIN","USER");
                     auth.requestMatchers("/like/**").hasAnyAuthority("ADMIN","USER");
                     auth.requestMatchers("/dislike/**").hasAnyAuthority("ADMIN","USER");
