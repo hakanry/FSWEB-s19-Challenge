@@ -1,9 +1,6 @@
 package com.workintech.s19_twitter_challange.controller;
 
-import com.workintech.s19_twitter_challange.dto.UserRequestDto;
 import com.workintech.s19_twitter_challange.dto.UserResponseDto;
-import com.workintech.s19_twitter_challange.entity.User;
-import com.workintech.s19_twitter_challange.mapper.UserMapper;
 import com.workintech.s19_twitter_challange.service.UserService;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;

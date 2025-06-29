@@ -1,6 +1,5 @@
 package com.workintech.s19_twitter_challange.exceptions;
 
-import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

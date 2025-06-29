@@ -1,8 +1,6 @@
 package com.workintech.s19_twitter_challange.repository;
 
 import com.workintech.s19_twitter_challange.entity.Like;
-import com.workintech.s19_twitter_challange.entity.Tweet;
-import com.workintech.s19_twitter_challange.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

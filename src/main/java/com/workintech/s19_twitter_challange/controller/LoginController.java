@@ -1,10 +1,8 @@
 package com.workintech.s19_twitter_challange.controller;
 
 import com.workintech.s19_twitter_challange.dto.UserRequestDto;
-import com.workintech.s19_twitter_challange.dto.UserResponseDto;
 import com.workintech.s19_twitter_challange.entity.User;
 import com.workintech.s19_twitter_challange.mapper.UserMapper;
-import com.workintech.s19_twitter_challange.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +34,7 @@ public class LoginController {
                     )
             );
 
-            User user = userMapper.toEntity(userRequestDto);
+            User user = (User) authentication.getPrincipal();
             return ResponseEntity.ok(userMapper.toResponseDto(user));
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

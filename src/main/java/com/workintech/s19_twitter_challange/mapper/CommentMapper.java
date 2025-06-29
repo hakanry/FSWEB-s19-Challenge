@@ -2,7 +2,6 @@ package com.workintech.s19_twitter_challange.mapper;
 
 import com.workintech.s19_twitter_challange.dto.CommentRequestDto;
 import com.workintech.s19_twitter_challange.dto.CommentResponseDto;
-import com.workintech.s19_twitter_challange.dto.UserResponseDto;
 import com.workintech.s19_twitter_challange.entity.Comment;
 import org.springframework.stereotype.Component;
 

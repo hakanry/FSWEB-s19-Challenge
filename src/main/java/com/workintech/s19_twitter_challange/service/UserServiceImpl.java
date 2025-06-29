@@ -4,6 +4,7 @@ import com.workintech.s19_twitter_challange.dto.UserRequestDto;
 import com.workintech.s19_twitter_challange.dto.UserResponseDto;
 import com.workintech.s19_twitter_challange.entity.Role;
 import com.workintech.s19_twitter_challange.entity.User;
+import com.workintech.s19_twitter_challange.exceptions.UserAlreadyRegisteredException;
 import com.workintech.s19_twitter_challange.exceptions.UserNotFoundException;
 import com.workintech.s19_twitter_challange.mapper.UserMapper;
 import com.workintech.s19_twitter_challange.repository.RoleRepository;
@@ -30,10 +31,46 @@ public class UserServiceImpl implements UserDetailsService , UserService{
     private PasswordEncoder passwordEncoder;
 
 
+    @Override
+    public List<UserResponseDto> getUsers(){
+        return userRepository.findAll().stream().map(user -> userMapper.toResponseDto(user)).toList();
+    }
+    @Override
+    public UserResponseDto getUserById(long id){
+        return userMapper.toResponseDto(userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id + "'li USER bulunamadı!")));
+    }
+
+    @Override
+    public UserResponseDto update(long userId,UserRequestDto userRequestDto){
+        User user = userMapper.toEntity(userRequestDto);
+        User foundUser = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId + "'li USER bulunamadı!"));
+
+        if(user.getUsername()!= null){
+            foundUser.setUsername(user.getUsername());
+        }
+        if(user.getPassword() != null){
+            foundUser.setPassword(user.getPassword());
+        }
+        userRepository.save(foundUser);
+        return userMapper.toResponseDto(foundUser);
+    }
+    @Override
+    public UserResponseDto delete(long id){
+        User foundUser = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id + "'li USER bulunamadı!"));
+        userRepository.delete(foundUser);
+        return userMapper.toResponseDto(foundUser);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUserName(username).orElseThrow(()-> new UsernameNotFoundException("USER BULUNAMADI!"));
+    }
+
+
     public User register(String username, String password,Boolean isAdmin) {
         Optional<User> userOptional = userRepository.findByUserName(username);
         if(userOptional.isPresent()){
-            throw new RuntimeException("Bu kullanıcı adı daha önce alınmış. USERNAME: "+username);
+            throw new UserAlreadyRegisteredException("Bu kullanıcı adı daha önce alınmış. USERNAME: "+username);
         }
 
         String encodedPassword = passwordEncoder.encode(password);
@@ -75,41 +112,5 @@ public class UserServiceImpl implements UserDetailsService , UserService{
             roleList.add(findRoleUser.get());
 
         }
-    }
-    @Override
-    public List<UserResponseDto> getUsers(){
-        return userRepository.findAll().stream().map(user -> userMapper.toResponseDto(user)).toList();
-    }
-    @Override
-    public UserResponseDto getUserById(long id){
-        return userMapper.toResponseDto(userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id + "'li USER bulunamadı!")));
-    }
-
-    @Override
-    public UserResponseDto update(long userId,UserRequestDto userRequestDto){
-        User user = userMapper.toEntity(userRequestDto);
-        User foundUser = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId + "'li USER bulunamadı!"));
-
-        if(user.getUsername()!= null){
-            foundUser.setUsername(user.getUsername());
-        }
-        if(user.getPassword() != null){
-            foundUser.setPassword(user.getPassword());
-        }
-        userRepository.save(foundUser);
-        return userMapper.toResponseDto(foundUser);
-    }
-    @Override
-    public UserResponseDto delete(long id){
-        User foundUser = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id + "'li USER bulunamadı!"));
-        userRepository.delete(foundUser);
-        return userMapper.toResponseDto(foundUser);
-    }
-
-
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUserName(username).orElseThrow(()-> new UsernameNotFoundException("USER BULUNAMADI!"));
     }
 }

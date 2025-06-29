@@ -1,6 +1,5 @@
 package com.workintech.s19_twitter_challange.dto;
 
-import com.workintech.s19_twitter_challange.entity.Tweet;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;

@@ -2,12 +2,10 @@ package com.workintech.s19_twitter_challange.mapper;
 
 import com.workintech.s19_twitter_challange.dto.TweetRequestDto;
 import com.workintech.s19_twitter_challange.dto.TweetResponseDto;
-import com.workintech.s19_twitter_challange.dto.UserResponseDto;
 import com.workintech.s19_twitter_challange.entity.Tweet;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
