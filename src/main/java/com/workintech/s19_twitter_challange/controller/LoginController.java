@@ -34,7 +34,7 @@ public class LoginController {
                     )
             );
 
-            User user = (User) authentication.getPrincipal();
+            User user = userMapper.toEntity(userRequestDto);
             return ResponseEntity.ok(userMapper.toResponseDto(user));
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

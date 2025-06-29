@@ -35,16 +35,15 @@ public class SecurityConfig {
                     auth.requestMatchers("/retweet/**").hasAnyAuthority("ADMIN","USER");
                     auth.anyRequest().authenticated();
                 })
-                .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
 
     @Bean
-    public AuthenticationManager authManager(UserDetailsService userDetailsService,PasswordEncoder passwordEncoder){
+    public AuthenticationManager authManager(UserDetailsService userDetailsService){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder);
+        provider.setPasswordEncoder(passwordEncoder());
         return new ProviderManager(provider);
     }
 
