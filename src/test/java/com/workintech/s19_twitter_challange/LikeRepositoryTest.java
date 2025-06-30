@@ -1,9 +1,11 @@
-package com.workintech.s19_twitter_challange.repository;
+package com.workintech.s19_twitter_challange;
 
-import com.workintech.s19_twitter_challange.S19TwitterChallangeApplication;
 import com.workintech.s19_twitter_challange.entity.Like;
 import com.workintech.s19_twitter_challange.entity.Tweet;
 import com.workintech.s19_twitter_challange.entity.User;
+import com.workintech.s19_twitter_challange.repository.LikeRepository;
+import com.workintech.s19_twitter_challange.repository.TweetRepository;
+import com.workintech.s19_twitter_challange.repository.UserRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

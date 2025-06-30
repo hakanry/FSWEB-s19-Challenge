@@ -1,8 +1,7 @@
-package com.workintech.s19_twitter_challange.repository;
+package com.workintech.s19_twitter_challange;
 
-import com.workintech.s19_twitter_challange.S19TwitterChallangeApplication;
-import com.workintech.s19_twitter_challange.entity.ReTweet;
 import com.workintech.s19_twitter_challange.entity.User;
+import com.workintech.s19_twitter_challange.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

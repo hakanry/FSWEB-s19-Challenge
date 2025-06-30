@@ -1,4 +1,4 @@
-package com.workintech.s19_twitter_challange.service;
+package com.workintech.s19_twitter_challange;
 
 import com.workintech.s19_twitter_challange.dto.UserRequestDto;
 import com.workintech.s19_twitter_challange.dto.UserResponseDto;
@@ -9,6 +9,7 @@ import com.workintech.s19_twitter_challange.exceptions.UserNotFoundException;
 import com.workintech.s19_twitter_challange.mapper.UserMapper;
 import com.workintech.s19_twitter_challange.repository.RoleRepository;
 import com.workintech.s19_twitter_challange.repository.UserRepository;
+import com.workintech.s19_twitter_challange.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
