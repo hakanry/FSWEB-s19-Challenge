@@ -87,7 +87,7 @@ public class UserServiceTest {
         List<User> users = List.of(user);
 
         when(userRepository.findAll()).thenReturn(users);
-        when(userMapper.toResponseDto(any(User.class))).thenReturn(new UserResponseDto("test", Set.of()));
+        when(userMapper.toResponseDto(any(User.class))).thenReturn(new UserResponseDto(user.getId(),"test", Set.of()));
 
         List<UserResponseDto> result = userService.getUsers();
 
@@ -101,7 +101,7 @@ public class UserServiceTest {
         User user = new User();
         user.setUsername("test");
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        when(userMapper.toResponseDto(user)).thenReturn(new UserResponseDto("test", Set.of()));
+        when(userMapper.toResponseDto(user)).thenReturn(new UserResponseDto(user.getId(),"test", Set.of()));
 
         UserResponseDto result = userService.getUserById(1);
         assertEquals("test", result.getUsername());
@@ -127,7 +127,7 @@ public class UserServiceTest {
         when(userMapper.toEntity(dto)).thenReturn(updated);
         when(userRepository.findById(1L)).thenReturn(Optional.of(foundUser));
         when(userRepository.save(any(User.class))).thenReturn(foundUser);
-        when(userMapper.toResponseDto(foundUser)).thenReturn(new UserResponseDto("updated", Set.of()));
+        when(userMapper.toResponseDto(foundUser)).thenReturn(new UserResponseDto(foundUser.getId(),"updated", Set.of()));
 
         UserResponseDto result = userService.update(1L, dto);
         assertEquals("updated", result.getUsername());
@@ -139,7 +139,7 @@ public class UserServiceTest {
         User user = new User();
         user.setUsername("toDelete");
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        when(userMapper.toResponseDto(user)).thenReturn(new UserResponseDto("toDelete", Set.of()));
+        when(userMapper.toResponseDto(user)).thenReturn(new UserResponseDto(user.getId(),"toDelete", Set.of()));
 
         UserResponseDto result = userService.delete(1L);
         verify(userRepository).delete(user);

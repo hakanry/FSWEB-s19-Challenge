@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/register")
 @AllArgsConstructor
 public class RegisterController {
 
@@ -18,7 +17,7 @@ public class RegisterController {
     private UserMapper userMapper;
 
 
-    @PostMapping
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponseDto register(@RequestBody UserRequestDto userRequestDto){
         User newUSER = userService.register(userRequestDto.getUsername(),userRequestDto.getPassword(), userRequestDto.getIsAdmin());

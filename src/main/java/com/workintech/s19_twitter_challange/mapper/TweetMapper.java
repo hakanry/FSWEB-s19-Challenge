@@ -20,6 +20,7 @@ public class TweetMapper {
     }
     public TweetResponseDto toResponseDto(Tweet tweet){
         TweetResponseDto tweetResponseDto = new TweetResponseDto();
+        tweetResponseDto.setId(tweet.getId());
         tweetResponseDto.setTweetText(tweet.getTweetText());
         tweetResponseDto.setUser(tweet.getUser().getUsername());
         tweetResponseDto.setReTweets(tweet.getReTweets().stream().map(reTweetMapper::toResponseDto).toList());

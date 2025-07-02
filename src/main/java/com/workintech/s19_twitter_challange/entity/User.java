@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,7 +19,7 @@ import java.util.*;
 @Data
 @Entity
 @Table(name="tuser")
-
+@ToString(exclude = {"tweets"})
 public class User implements UserDetails {
 
     @Id
@@ -47,7 +48,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonManagedReference("user-tweet")
     private Set<Tweet> tweets = new HashSet<>();
 
@@ -55,11 +56,11 @@ public class User implements UserDetails {
     @JsonManagedReference("user-comment")
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonManagedReference("user-like")
     private List<Like> likes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonManagedReference("user-retweet")
     private List<ReTweet> reTweets = new ArrayList<>();
 

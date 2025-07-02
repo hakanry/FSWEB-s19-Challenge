@@ -24,6 +24,10 @@ public class TweetServiceImpl implements TweetService{
     private final UserRepository userRepository;
     private final TweetMapper tweetMapper;
 
+
+    public Set<TweetResponseDto> findAll(){
+        return tweetRepository.findAll().stream().map(tweetMapper::toResponseDto).collect(Collectors.toSet());
+    }
     @Override
     public TweetResponseDto findById(long id){
         return tweetMapper.toResponseDto(tweetRepository.findById(id).orElseThrow(()-> new TweetNotFoundException(id+"'li TWEET bulunamadı!")));

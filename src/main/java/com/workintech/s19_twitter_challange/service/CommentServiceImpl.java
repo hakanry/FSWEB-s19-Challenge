@@ -46,7 +46,7 @@ public class CommentServiceImpl implements CommentService{
             if(comment.getCommentText() != null)
                 foundComment.setCommentText(comment.getCommentText());
             commentRepository.save(foundComment);
-            return commentMapper.toResponseDto(comment);
+            return commentMapper.toResponseDto(foundComment);
         }
     }
 

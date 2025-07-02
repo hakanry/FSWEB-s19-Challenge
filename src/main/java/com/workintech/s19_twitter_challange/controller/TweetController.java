@@ -20,6 +20,12 @@ public class TweetController {
 
     private TweetService tweetService;
 
+
+    @GetMapping
+    public Set<TweetResponseDto> findAll(){
+        return tweetService.findAll();
+
+    }
     @GetMapping("/{id}")
     public TweetResponseDto findById(@Positive @PathVariable long id){
         return tweetService.findById(id);
@@ -41,8 +47,8 @@ public class TweetController {
         }
     }
 
-    @PatchMapping("/{id}")
-    public TweetResponseDto update(@AuthenticationPrincipal User user,@Positive @PathVariable long tweetId,@Validated @RequestBody TweetRequestDto tweet){
+    @PatchMapping("/{tweetId}")
+    public TweetResponseDto update(@AuthenticationPrincipal User user,@Positive @PathVariable("tweetId") long tweetId,@Validated @RequestBody TweetRequestDto tweet){
         if (user == null) {
             throw new UserNotLoginAlreadyException("Giriş yapmalısınız!");
         }else{

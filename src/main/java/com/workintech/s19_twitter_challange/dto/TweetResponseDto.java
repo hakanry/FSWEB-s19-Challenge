@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Component
 public class TweetResponseDto {
-
+    private long id;
     private String tweetText;
     private String user;
     private List<CommentResponseDto> comments;

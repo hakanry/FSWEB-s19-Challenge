@@ -22,6 +22,7 @@ public class UserMapper {
 
     public UserResponseDto toResponseDto(User user){
         UserResponseDto userResponseDto = new UserResponseDto();
+        userResponseDto.setId(user.getId());
         userResponseDto.setUsername(user.getUsername());
         userResponseDto.setTweets(user.getTweets().stream().map(tweetMapper::toResponseDto).collect(Collectors.toSet()));
         return userResponseDto;
